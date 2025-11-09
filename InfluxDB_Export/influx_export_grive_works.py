@@ -23,8 +23,8 @@ FOLDER_ID = '1cShAstHWd5sdE6lCjBYCefXTPUNRmOwm'  # ganti dengan folder kamu
 # -- AUTENTIKASI GOOGLE DRIVE ---
 creds = None
 if os.path.exists(TOKEN_FILE):
-    with open(TOKEN_FILE, 'rb') as token:
-        creds = pickle.load(token)
+    with open(TOKEN_FILE, 'rb') as token_file:
+        creds = pickle.load(token_file)
 
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
@@ -32,8 +32,8 @@ if not creds or not creds.valid:
     else:
         flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
         creds = flow.run_local_server(port=0)
-    with open(TOKEN_FILE, 'wb') as token:
-        pickle.dump(creds, token)
+    with open(TOKEN_FILE, 'wb') as token_file:
+        pickle.dump(creds, token_file)
 
 service = build('drive', 'v3', credentials=creds)
 
