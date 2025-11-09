@@ -12,7 +12,7 @@ org     = "TEKLIS PNM"
 bucket  = "TemperatureSensor"
 
 # --- KONFIGURASI GOOGLE DRIVE ---
-SERVICE_ACCOUNT_FILE = 'path/to/your/service-account-file.json'
+SERVICE_ACCOUNT_FILE = 'Drive_Upload_JSON/influxdb-export-upload-aad9bb1590f0.json'
 FOLDER_ID = 'InfluxDB Upload'
 
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
