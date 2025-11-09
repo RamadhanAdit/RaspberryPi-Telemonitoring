@@ -1,4 +1,4 @@
-from influxdb_client inport InfluxDBClient
+from influxdb_client import InfluxDBClient
 import pandas as pd
 from datetime import timedelta
 
