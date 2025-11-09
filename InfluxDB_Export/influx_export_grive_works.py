@@ -77,11 +77,10 @@ else:
     #Simpan kedalam file excel
     df.to_excel(output_file, index=False)
     print(f"Data berhasil diekspor ke: {output_file}")
-    print(f"Nama file: {output_file}")
     
     # --- UPLOAD KE GOOGLE DRIVE ---
     file_metadata = {
-        'name': output_file,
+        'name': os.path.basename(output_file),
         'parents': [FOLDER_ID]
     }
     media = MediaFileUpload(
