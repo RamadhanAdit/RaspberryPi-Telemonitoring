@@ -68,10 +68,15 @@ else:
             except Exception:
                 pass  # biarkan kolom lain tetap aman
             
-    # --- SIMPAN KE EXCEL ---
-    output_file = f"influx_export_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+    # --- SIMPAN KE DALAM BENTUK FILE EXCEL ---
+    # Pastikan folder penyimpanan ada, jika tidak buat foldernya
+    save_dir = "/home/pi/Documents/InfluxDB_Exports/"
+    os.makedirs(save_dir, exist_ok=True)
+    # Membuat nama file dengan timestamp
+    output_file = os.path.join(save_dir, f"influx_export_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.xlsx")
+    #Simpan kedalam file excel
     df.to_excel(output_file, index=False)
-    print(f"Data berhasil diekspor ke home/pi/")
+    print(f"Data berhasil diekspor ke: {output_file}")
     print(f"Nama file: {output_file}")
     
     # --- UPLOAD KE GOOGLE DRIVE ---
