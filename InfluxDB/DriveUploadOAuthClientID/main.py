@@ -43,7 +43,7 @@ from(bucket : "TemperatureSensor")
     |> range(start: -1d)
     |> filter(fn : (r) => r["_measurement"] == "Transformers")
     |> filter(fn : (r) => r["model"] == "TR-01")
- 	|> yield(name: "transformer_testing)
+ 	|> yield(name: "transformer_testing")
 '''
 
 # --- EKPORT DATA DARI INFLUXDB ---
