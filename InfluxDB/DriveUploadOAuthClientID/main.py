@@ -64,6 +64,9 @@ else:
     # Hapus kolom 'result' dan 'table' jika ada
     df = df.drop(columns=['result', 'table'], errors='ignore')
     
+    # --- ATUR URUTAN KOLOM ---
+    df = df[['_time', 'surface', 'phaseR', 'phaseS', 'phaseT', 'model', 'city', 'province', 'site']]
+    
     # --- KONVERSI KE WIB ---
     for col in df.columns:
         if "_time" in col or "_start" in col or "_stop" in col:
