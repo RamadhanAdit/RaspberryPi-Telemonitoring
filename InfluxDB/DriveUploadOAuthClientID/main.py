@@ -138,7 +138,7 @@ else:
         
         # Gunakan style tabel (zebra stripe)
         style = TableStyleInfo(
-            name="TableStyleMedium9",
+            name="TableStyleLight1",
             showRowStripes=True,
             showColumnStripes=False
         )
