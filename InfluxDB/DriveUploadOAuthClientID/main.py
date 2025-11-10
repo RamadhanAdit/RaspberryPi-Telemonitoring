@@ -102,7 +102,7 @@ else:
     
     # Simpan dengan RxcelWriter agar bisa di atur formatnya nanti
     with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
-        df.to_excel(output_file, index=False, sheet_name='ExportedData')
+        df.to_excel(writer, index=False, sheet_name='ExportedData')
         
         # Ambil workbook dan sheet untuk styling
         workbook = writer.book
