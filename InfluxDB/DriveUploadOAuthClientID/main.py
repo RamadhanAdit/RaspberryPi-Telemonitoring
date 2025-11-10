@@ -39,11 +39,13 @@ service = build('drive', 'v3', credentials=creds)
 
 # --- QUERY INFLUXDB ---
 query = f'''
-from(bucket : "TemperatureSensor")
-    |> range(start: -1d)
-    |> filter(fn : (r) => r["_measurement"] == "Transformers")
-    |> filter(fn : (r) => r["model"] == "TR-01")
- 	|> yield(name: "transformer_testing")
+from(bucket: "TemperatureSensor")
+  |> range(start: -1d)
+  |> filter(fn: (r) => r["_measurement"] == "Transformers")
+  |> filter(fn: (r) => r["model"] == "TR-01")
+  |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
+  |> keep(columns: ["_time", "surface", "phaseR", "phaseS", "phaseT", "city", "model", "province", "site"])
+  |> yield(name: "transformer_testing")
 '''
 
 # --- EKPORT DATA DARI INFLUXDB ---
