@@ -64,6 +64,19 @@ else:
     # Hapus kolom 'result' dan 'table' jika ada
     df = df.drop(columns=['result', 'table'], errors='ignore')
     
+    # --- GANTI NAMA KOLOM ---
+    df = df.rename(columns={
+        "_time": "TIME",
+        "surface": "SURFACE",
+        "phaseR": "PHASE R",
+        "phaseS": "PHASE S",
+        "phaseT": "PHASE T",
+        "model": "MODEL",
+        "city": "CITY",
+        "province": "PROVINCE",
+        "site": "SITE"
+    })
+    
     # --- ATUR URUTAN KOLOM ---
     df = df[['_time', 'surface', 'phaseR', 'phaseS', 'phaseT', 'model', 'city', 'province', 'site']]
     
