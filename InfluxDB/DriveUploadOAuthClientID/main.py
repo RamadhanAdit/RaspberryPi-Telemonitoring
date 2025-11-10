@@ -7,6 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from openpyxl import load_workbook
 from openpyxl.styles import Font
+from openpyxl.worksheet.table import Table, TableStyleInfo
 import pickle
 import os
 
@@ -127,6 +128,25 @@ else:
                     pass
             adjusted_width = (max_length + 2)
             sheet.column_dimensions[column].width = adjusted_width
+        
+        # Buat tabel otomatis (table style)
+        total_rows = sheet.max_row
+        total_cols = sheet.max_column
+        ref = f"A1:{sheet.cell(row=total_rows, column=total_cols).coordinate}"
+        
+        table = Table(displayName="ExportedDataTable", ref=ref)
+        
+        # Gunakan style tabel (zebra stripe)
+        style = TableStyleInfo(
+            name="TableStyleMedium9",
+            showRowStripes=True,
+            showColumnStripes=False
+        )
+        table.tableStyleInfo = style
+        sheet.add_table(table)
+        
+        # freeze Header
+        sheet.freeze_panes = "A2"
     
     print(f"Data berhasil diekspor ke: {output_file}")
     
