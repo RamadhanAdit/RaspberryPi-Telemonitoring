@@ -45,6 +45,8 @@ from(bucket: "TemperatureSensor")
   |> filter(fn: (r) => r["model"] == "TR-01")
   |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
   |> keep(columns: ["_time", "surface", "phaseR", "phaseS", "phaseT", "city", "model", "province", "site"])
+  |> drop(colums: ["_result", "table"])
+  |> yield(name: "transformer_testing")
 '''
 
 # --- EKPORT DATA DARI INFLUXDB ---
