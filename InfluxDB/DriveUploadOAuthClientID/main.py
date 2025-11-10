@@ -45,7 +45,6 @@ from(bucket: "TemperatureSensor")
   |> filter(fn: (r) => r["model"] == "TR-01")
   |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
   |> keep(columns: ["_time", "surface", "phaseR", "phaseS", "phaseT", "city", "model", "province", "site"])
-  |> drop(columns: ["result", "table"])
   |> yield(name: "transformer_testing")
 '''
 
@@ -60,6 +59,10 @@ if tables.empty:
 else:
     # --- Gabungkan semua tabel hasil query ---
     df = tables
+    
+    # --- HAPUS KOLOM YANG TIDAK DIPERLUKAN ---
+    # Hapus kolom 'result' dan 'table' jika ada
+    df = df.drop(columns=['result', 'table'], errors='ignore')
     
     # --- KONVERSI KE WIB ---
     for col in df.columns:
