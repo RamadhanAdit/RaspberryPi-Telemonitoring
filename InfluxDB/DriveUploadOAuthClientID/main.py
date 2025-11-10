@@ -5,6 +5,8 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from openpyxl import load_workbook
+from openpyxl.styles import Font
 import pickle
 import os
 
@@ -97,8 +99,35 @@ else:
     os.makedirs(save_dir, exist_ok=True)
     # Membuat nama file dengan timestamp
     output_file = os.path.join(save_dir, f"influx_export_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.xlsx")
-    #Simpan kedalam file excel
-    df.to_excel(output_file, index=False)
+    
+    # Simpan dengan RxcelWriter agar bisa di atur formatnya nanti
+    with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+        df.to_excel(output_file, index=False, sheet_name='ExportedData')
+        
+        # Ambil workbook dan sheet untuk styling
+        workbook = writer.book
+        sheet = workbook['ExportedData']
+        
+        # Buat font bold
+        bold_font = Font(bold=True)
+        # Terapkan font bold ke header
+        for cell in sheet[1]:
+            cell.font = bold_font
+        
+        # AutoFit Lebar Kolom
+        for column_cells in sheet.columns:
+            max_length = 0
+            column = column_cells[0].column_letter  # ambil huruf kolom (A, B, C, ...)
+            for cell in column_cells:
+                try:
+                    # Cari panjang teks terpanjang di kolom
+                    if cell.value:
+                        max_length = max(max_length, len(str(cell.value)))
+                except:
+                    pass
+            adjusted_width = (max_length + 2)
+            sheet.column_dimensions[column].width = adjusted_width
+    
     print(f"Data berhasil diekspor ke: {output_file}")
     
     # --- UPLOAD KE GOOGLE DRIVE ---
