@@ -145,6 +145,18 @@ else:
         table.tableStyleInfo = style
         sheet.add_table(table)
         
+        # --- TAMBAH BORDER DI SEMUA SEL ---
+        thin_border = Border(
+            left=Side(style='thin', color='000000'),
+            right=Side(style='thin', color='000000'),
+            top=Side(style='thin', color='000000'),
+            bottom=Side(style='thin', color='000000')
+        )
+        
+        for row in sheet.iter_rows(min_row=1, max_row=total_rows, max_col=total_cols):
+            for cell in row:
+                cell.border = thin_border
+        
         # freeze Header
         sheet.freeze_panes = "A2"
     
